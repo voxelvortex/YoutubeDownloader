@@ -4,16 +4,15 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import *
 from PyQt5 import QtWidgets, QtCore, QtWebKitWidgets,QtGui
+from PyQt5.QtWebKit import QWebSettings
+import youtube_dl
+import os
 
 class App(QWidget):
 
     def __init__(self):
         super().__init__()
         self.title = 'Youtube Downloader'
-        self.left = 10
-        self.top = 10
-        self.width = 320
-        self.height = 200
         self.initUI()
 
     def initUI(self):
@@ -44,11 +43,7 @@ class App(QWidget):
         self.downloadButton = QtWidgets.QPushButton(self.centralwidget)
         self.downloadButton.setObjectName("downloadButton")
         self.verticalLayout.addWidget(self.downloadButton)
-        #self.setCentralWidget(self.centralwidget)
-        #self.menubar = QtWidgets.QMenuBar(self)
-        #self.menubar.setGeometry(QtCore.QRect(0, 0, 824, 21))
-        #self.menubar.setObjectName("menubar")
-        #self.setMenuBar(self.menubar)
+
 
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("MainWindow", "Youtube Downloader"))
@@ -62,24 +57,27 @@ class App(QWidget):
         #button.clicked.connect(self.on_click)
 
         self.downloadButton.clicked.connect(self.youtubeDownload)
-        #self.setURL.clicked.connect(self.setURL)
-        i = (self.webView.url())
-        self.urlInput.setText(str(i))
-        self.webView.setUrl(i)
+        self.setURL.clicked.connect(self.setURLm)
+        i = self.webView.url()
+        i = str(i)
+        i = i[19:]
+        ilen = i.__len__()
+        i = i[:ilen - 2]
+        self.urlInput.setText(i)
         print(i)
 
         self.show()
 
     @pyqtSlot()
     def youtubeDownload(self):
-        print('PyQt5 button click')
+        os.system("youtube-dl -o \"~/Downloads/Youtube_Downloader/%(title)s.%(ext)s\" \"" + self.urlInput.displayText() + "\"")
 
     @pyqtSlot()
-    def setURL(self):
-        print("setUrl")
-
-    def event(self, a0: QtCore.QEvent):
-        print("url")
+    def setURLm(self):
+        try:
+            self.webView.setUrl(QUrl(self.urlInput.displayText()))
+        except:
+            pass
 
 
 
