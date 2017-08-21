@@ -2,12 +2,14 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from PyQt5 import QtTest
 from PyQt5 import *
 from PyQt5 import QtWidgets, QtCore, QtWebKitWidgets,QtGui
 from PyQt5.QtWebKit import QWebSettings
 from PyQt5.QtWebKitWidgets import QWebPage
-import youtube_dl
 import os
+import subprocess
+import youtube_dl
 
 class App(QWidget):
 
@@ -54,40 +56,61 @@ class App(QWidget):
 
         self.downloadButton.clicked.connect(self.youtubeDownload)
         self.setURL.clicked.connect(self.setURLm)
-
-
         self.getActualURL()
+        self.webView.installEventFilter(self)
         self.show()
+
+    def eventFilter(self, obj, event):
+        if obj == self.webView:
+            if(self.webView.hasFocus() == True):
+                self.getActualURL()
+                self.setURLm
+
+        return False
 
     def getActualURL(self):
         i = self.webView.url()
         i = str(i)
         i = i[19:]
         ilen = i.__len__()
-        i = i[:ilen - 2]
-        self.urlInput.setText(i)
-
-
-    def event(self, a0: QtCore.QEvent):
-        self.getActualURL()
-
-
-    @pyqtSlot()
-    def url_changed(self, q):
-        url = self.webView.setText(q.toString())
-        print(url)
+        url = i[:ilen - 2]
         self.urlInput.setText(url)
+
 
     @pyqtSlot()
     def youtubeDownload(self):
-        os.system("youtube-dl -o \"~/Downloads/Youtube_Downloader/%(title)s.%(ext)s\" \"" + self.urlInput.displayText() + "\"")
+        try:
+            with youtube_dl.YoutubeDL({}) as ydl:
+                login = os.getlogin()
+                path = "C:/Users/"+login+"/Downloads/Youtube_Downloader"
+                if not os.path.exists(path):
+                    os.makedirs(path)
+                os.chdir(path)
+                ydl.download([str(self.urlInput.displayText())])
+        except:
+            msgBox = QMessageBox()
+            msgBox.setText("Error:")
+            msgBox.setInformativeText("An unknown error occurred. Ensure video link is correct")
+            msgBox.setStandardButtons(QMessageBox.Ok)
+            msgBox.setDefaultButton(QMessageBox.Ok)
+            msgBox.exec_()
 
     @pyqtSlot()
     def setURLm(self):
         try:
-            self.webView.setUrl(QUrl(self.urlInput.displayText()))
+            url = self.urlInput.displayText()
+            i7 = url[:7]
+            i8 = url[:8]
+            if (i7 == "http://" or i8 == "https://"):
+                pass
+            else:
+                url = "http://"+url
+            print(url)
+
+            self.webView.setUrl(QUrl(url))
         except:
             pass
+
 
 
 
