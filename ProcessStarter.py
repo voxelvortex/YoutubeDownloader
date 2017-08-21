@@ -5,6 +5,7 @@ from PyQt5.QtCore import *
 from PyQt5 import *
 from PyQt5 import QtWidgets, QtCore, QtWebKitWidgets,QtGui
 from PyQt5.QtWebKit import QWebSettings
+from PyQt5.QtWebKitWidgets import QWebPage
 import youtube_dl
 import os
 
@@ -51,22 +52,31 @@ class App(QWidget):
         self.setURL.setText(_translate("MainWindow", "Go to entered URL"))
         self.downloadButton.setText(_translate("MainWindow", "Download Youtube Video"))
 
-        #button = QPushButton('PyQt5 button', self)
-        #button.setToolTip('This is an example button')
-        #button.move(100,70)
-        #button.clicked.connect(self.on_click)
-
         self.downloadButton.clicked.connect(self.youtubeDownload)
         self.setURL.clicked.connect(self.setURLm)
+
+
+        self.getActualURL()
+        self.show()
+
+    def getActualURL(self):
         i = self.webView.url()
         i = str(i)
         i = i[19:]
         ilen = i.__len__()
         i = i[:ilen - 2]
         self.urlInput.setText(i)
-        print(i)
 
-        self.show()
+
+    def event(self, a0: QtCore.QEvent):
+        self.getActualURL()
+
+
+    @pyqtSlot()
+    def url_changed(self, q):
+        url = self.webView.setText(q.toString())
+        print(url)
+        self.urlInput.setText(url)
 
     @pyqtSlot()
     def youtubeDownload(self):
