@@ -2,32 +2,29 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5 import QtTest
-from PyQt5 import *
-from PyQt5 import QtWidgets, QtCore, QtWebKitWidgets,QtGui,QtWebKit,QtWebSockets,QtWebChannel
-from PyQt5.QtWebKit import QWebSettings
-from PyQt5.QtWebKitWidgets import QWebPage
-import os
-import subprocess
-import youtube_dl
-import MainWindow
+from PyQt5 import QtWidgets, QtCore, QtGui, QtTest
+from PyQt5 import QtWebEngine,QtWebEngineWidgets, QtWebEngineCore
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+import os, subprocess, youtube_dl, MainWindow
 from MainWindow import *
 
-class App(QWidget,Ui_MainWindow):
+class App(QMainWindow):
     def __init__(self):
-        super(App, self).__init__()
+        super().__init__()
+        self.webView.load(self.webView,("http://www.Youtube.com"))
+        self.webView.setEnabled(True)
+        self.webView.setObjectName("webView")
+        self.webView.setBaseSize(30, 30)
 
-        self.ui = Ui_MainWindow
-        self.ui.setupUi(self, self)
-        QtWebKit.QWebSettings.globalSettings().setAttribute(QtWebKit.QWebSettings.PluginsEnabled,True)
-        self.show()
 
+        ui.downloadButton.setEnabled(False)
+        ui.setURL.setEnabled(False)
         self.downloadButton.clicked.connect(self.youtubeDownload)
         self.setURL.clicked.connect(self.setURLm)
         self.getActualURL()
         self.webView.installEventFilter(self)
 
-    def eventFilter(self, obj, event):
+    def event(self,obj):
         if obj == self.webView:
             if(self.webView.hasFocus() == True):
                 self.getActualURL()
@@ -36,6 +33,7 @@ class App(QWidget,Ui_MainWindow):
         return False
 
     def getActualURL(self):
+        print("getactualurl")
         i = self.webView.url()
         i = str(i)
         i = i[19:]
@@ -46,6 +44,7 @@ class App(QWidget,Ui_MainWindow):
 
     @pyqtSlot()
     def youtubeDownload(self):
+        print("ytdownload")
         try:
             with youtube_dl.YoutubeDL({}) as ydl:
                 login = os.getlogin()
@@ -64,6 +63,7 @@ class App(QWidget,Ui_MainWindow):
 
     @pyqtSlot()
     def setURLm(self):
+        print("seturlm")
         try:
             url = self.urlInput.displayText()
             i7 = url[:7]
@@ -74,13 +74,14 @@ class App(QWidget,Ui_MainWindow):
                 url = "http://"+url
             print(url)
 
-            self.webView.setUrl(QUrl(url))
+            self.webView.load(QUrl(url))
         except:
             pass
 
-
-
-
 app = QApplication(sys.argv)
-ex = App()
+window = QMainWindow()
+ui = Ui_MainWindow()
+ui.setupUi(window)
+
+window.show()
 sys.exit(app.exec_())
