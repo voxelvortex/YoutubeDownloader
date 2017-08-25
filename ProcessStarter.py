@@ -11,26 +11,34 @@ from MainWindow import *
 class App(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.webView.load(self.webView,("http://www.Youtube.com"))
-        self.webView.setEnabled(True)
-        self.webView.setObjectName("webView")
-        self.webView.setBaseSize(30, 30)
+    def setUpStuff(self):
+        #self.engineView = QWebEngineView
+        #self.engineView.load(QWebEngineView, QtCore.QUrl("http://www.Youtube.com"))
+        #self.webView.setEnabled(True)
+        #self.webView.setObjectName("webView")
+        #self.webView.setBaseSize(30, 30)
+
+        self.webView = QWebEngineView
+        self.webView.load(QUrl('http://youtube.com'))
+        self.webView.setBaseSize(500,500)
+        self.webView.setVisible(True)
+        self.getActualURL(self)
 
 
-        ui.downloadButton.setEnabled(False)
-        ui.setURL.setEnabled(False)
-        self.downloadButton.clicked.connect(self.youtubeDownload)
-        self.setURL.clicked.connect(self.setURLm)
-        self.getActualURL()
-        self.webView.installEventFilter(self)
+        #ui.downloadButton.setEnabled(False)
+        #ui.setURL.setEnabled(False)
+        ui.downloadButton.clicked.connect(self.youtubeDownload)
+        ui.setURL.clicked.connect(self.setURLm)
+        #self.getActualURL()
+        #self.webView.installEventFilter(self)
 
-    def event(self,obj):
-        if obj == self.webView:
-            if(self.webView.hasFocus() == True):
-                self.getActualURL()
-                self.setURLm
+    #def event(self,obj):
+        #if obj == self.webView:
+            #if(self.webView.hasFocus() == True):
+                #self.getActualURL()
+                #self.setURLm
 
-        return False
+        #return False
 
     def getActualURL(self):
         print("getactualurl")
@@ -39,7 +47,8 @@ class App(QMainWindow):
         i = i[19:]
         ilen = i.__len__()
         url = i[:ilen - 2]
-        self.urlInput.setText(url)
+        print(url)
+        #self.urlInput.setText(url)
 
 
     @pyqtSlot()
@@ -82,6 +91,8 @@ app = QApplication(sys.argv)
 window = QMainWindow()
 ui = Ui_MainWindow()
 ui.setupUi(window)
-
 window.show()
+l = App
+l.setUpStuff(l)
+
 sys.exit(app.exec_())
