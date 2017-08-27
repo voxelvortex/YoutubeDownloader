@@ -8,37 +8,27 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 import os, subprocess, youtube_dl, MainWindow
 from MainWindow import *
 
-class App(QMainWindow):
+class App(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-    def setUpStuff(self):
-        #self.engineView = QWebEngineView
-        #self.engineView.load(QWebEngineView, QtCore.QUrl("http://www.Youtube.com"))
-        #self.webView.setEnabled(True)
-        #self.webView.setObjectName("webView")
-        #self.webView.setBaseSize(30, 30)
+        self.setupUi(self)
+        self.setUpStuff()
 
-        self.webView = QWebEngineView
+    def setUpStuff(self):
+
+        self.webView = QWebEngineView()
         self.webView.load(QUrl('http://youtube.com'))
         self.webView.setBaseSize(500,500)
         self.webView.setVisible(True)
-        self.getActualURL(self)
-
-
-        #ui.downloadButton.setEnabled(False)
-        #ui.setURL.setEnabled(False)
-        ui.downloadButton.clicked.connect(self.youtubeDownload)
-        ui.setURL.clicked.connect(self.setURLm)
-        #self.getActualURL()
+        self.gridLayout.addWidget(self.webView, 1, 0, 1, 2)
         #self.webView.installEventFilter(self)
 
-    #def event(self,obj):
-        #if obj == self.webView:
-            #if(self.webView.hasFocus() == True):
-                #self.getActualURL()
-                #self.setURLm
 
-        #return False
+        self.getActualURL()
+        self.downloadButton.clicked.connect(self.youtubeDownload)
+        self.setURL.clicked.connect(self.setURLm)
+        self.getActualURL()
+
 
     def getActualURL(self):
         print("getactualurl")
@@ -48,7 +38,7 @@ class App(QMainWindow):
         ilen = i.__len__()
         url = i[:ilen - 2]
         print(url)
-        #self.urlInput.setText(url)
+        self.urlInput.setText(url)
 
 
     @pyqtSlot()
@@ -86,13 +76,21 @@ class App(QMainWindow):
             self.webView.load(QUrl(url))
         except:
             pass
+    '''def mousePressEvent(self, event):
+        if event.buttons() == QtCore.Qt.LeftButton:
+            print("t")'''
+
+    def eventFilter(self, obj, event):
+        print("T")
+        if(obj == self.webView):
+            print("t")
+
+
 
 app = QApplication(sys.argv)
-window = QMainWindow()
-ui = Ui_MainWindow()
-ui.setupUi(window)
-window.show()
-l = App
-l.setUpStuff(l)
+l = App()
+l.show()
+path = str(os.path.dirname(os.path.realpath(__file__)))
+l.setWindowIcon(QIcon(path+"/YTDL.png"))
 
 sys.exit(app.exec_())

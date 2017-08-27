@@ -16,6 +16,12 @@
     <height>150</height>
    </size>
   </property>
+  <property name="maximumSize">
+   <size>
+    <width>1200</width>
+    <height>835</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Youtube Downloader</string>
   </property>
