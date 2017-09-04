@@ -21,7 +21,7 @@ class App(QMainWindow, Ui_MainWindow):
         self.webView.setBaseSize(500,500)
         self.webView.setVisible(True)
         self.gridLayout.addWidget(self.webView, 1, 0, 1, 2)
-        #self.webView.installEventFilter(self)
+        self.webView.installEventFilter(self)
 
 
         self.getActualURL()
@@ -33,6 +33,7 @@ class App(QMainWindow, Ui_MainWindow):
     def getActualURL(self):
         print("getactualurl")
         i = self.webView.url()
+        print(i)
         i = str(i)
         i = i[19:]
         ilen = i.__len__()
@@ -76,15 +77,22 @@ class App(QMainWindow, Ui_MainWindow):
             self.webView.load(QUrl(url))
         except:
             pass
-    '''def mousePressEvent(self, event):
-        if event.buttons() == QtCore.Qt.LeftButton:
-            print("t")'''
 
-    def eventFilter(self, obj, event):
-        print("T")
-        if(obj == self.webView):
-            print("t")
+        def eventFilter(self, obj, event):
 
+            #if(obj == self.webView):
+            self.getActualURL()
+            if event.type() == QtCore.QEvent.MouseButtonPress:
+                print("t")
+            #in (QtCore.QEvent.MouseButtonPress,QtCore.QEvent.MouseButtonDblClick):
+            if event.button() == QtCore.Qt.LeftButton:
+                print("left")
+            if event.button() == QtCore.Qt.ExtraButton1:
+                self.webView.back()
+            if event.button() == QtCore.Qt.ExtraButton2:
+                    self.webView.forward()
+
+            return QtGui.QWidget.eventFilter(self, obj, event)
 
 
 app = QApplication(sys.argv)
