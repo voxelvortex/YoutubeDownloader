@@ -44,6 +44,7 @@ class App(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def youtubeDownload(self):
+        self.getActualURL()
         print("ytdownload")
         try:
             with youtube_dl.YoutubeDL({}) as ydl:
@@ -65,12 +66,17 @@ class App(QMainWindow, Ui_MainWindow):
     def setURLm(self):
         print("seturlm")
         try:
+            shortcut = False
             url = self.urlInput.displayText()
             i7 = url[:7]
             i8 = url[:8]
             if (i7 == "http://" or i8 == "https://"):
                 pass
             else:
+                '''with open(fname) as f:
+                    content = f.readlines()
+                # you may also want to remove whitespace characters like `\n` at the end of each line
+                content = [x.strip() for x in content]'''
                 url = "http://"+url
             print(url)
 
