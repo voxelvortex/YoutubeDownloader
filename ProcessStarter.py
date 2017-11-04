@@ -108,8 +108,8 @@ mf = Path(path+"/first.txt")
 if not mf.is_file():
     open(path+"/first.txt", 'w').close()
     os.chdir(pyLoc)
-    subprocess.check_output(['pip', 'install','PyQt5'])
-    subprocess.check_output(['pip', 'install','youtube-dl'])
+    os.system('pip install PyQt5')
+    os.system('pip install youtube-dl')
 
 app = QApplication(sys.argv)
 l = App()
