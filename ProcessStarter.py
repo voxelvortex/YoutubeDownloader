@@ -1,4 +1,5 @@
 import sys
+import subprocess
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
@@ -7,6 +8,7 @@ from PyQt5 import QtWebEngine,QtWebEngineWidgets, QtWebEngineCore
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 import os, subprocess, youtube_dl, MainWindow
 from MainWindow import *
+from pathlib import Path
 
 class App(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -73,10 +75,6 @@ class App(QMainWindow, Ui_MainWindow):
             if (i7 == "http://" or i8 == "https://"):
                 pass
             else:
-                '''with open(fname) as f:
-                    content = f.readlines()
-                # you may also want to remove whitespace characters like `\n` at the end of each line
-                content = [x.strip() for x in content]'''
                 url = "http://"+url
             print(url)
 
@@ -101,10 +99,20 @@ class App(QMainWindow, Ui_MainWindow):
             return QtGui.QWidget.eventFilter(self, obj, event)
 
 
+path = str(os.path.dirname(os.path.realpath(__file__)))
+pyLoc = sys.executable
+pyLoc = pyLoc[:-10] + "Scripts"
+print(pyLoc,path)
+
+mf = Path(path+"/first.txt")
+if not mf.is_file():
+    open(path+"/first.txt", 'w').close()
+    os.chdir(pyLoc)
+    subprocess.check_output(['pip', 'install','PyQt5'])
+    subprocess.check_output(['pip', 'install','youtube-dl'])
+
 app = QApplication(sys.argv)
 l = App()
 l.show()
-path = str(os.path.dirname(os.path.realpath(__file__)))
 l.setWindowIcon(QIcon(path+"/YTDL.png"))
-
 sys.exit(app.exec_())
