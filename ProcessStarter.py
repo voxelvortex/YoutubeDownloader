@@ -1,7 +1,6 @@
 import sys
 import subprocess
-import os, MainWindow
-from MainWindow import *
+import os
 from pathlib import Path
 import pip
 
@@ -15,7 +14,8 @@ if not mf.is_file():
     open(path+"/first.txt", 'w').close()
     pip.main(['install', 'youtube-dl'])
     pip.main(['install', 'PyQt5'])
-
+import MainWindow
+from MainWindow import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
