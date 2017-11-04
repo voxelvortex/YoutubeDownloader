@@ -14,6 +14,7 @@ if not mf.is_file():
     open(path+"/first.txt", 'w').close()
     pip.main(['install', 'youtube-dl'])
     pip.main(['install', 'PyQt5'])
+
 import MainWindow
 from MainWindow import *
 from PyQt5.QtWidgets import *
