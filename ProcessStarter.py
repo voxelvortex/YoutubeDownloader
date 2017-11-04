@@ -58,7 +58,6 @@ class App(QMainWindow, Ui_MainWindow):
         print(url)
         self.urlInput.setText(url)
 
-
     @pyqtSlot()
     def youtubeDownload(self):
         self.getActualURL()
@@ -112,7 +111,6 @@ class App(QMainWindow, Ui_MainWindow):
                     self.webView.forward()
 
             return QtGui.QWidget.eventFilter(self, obj, event)
-
 
 app = QApplication(sys.argv)
 l = App()
