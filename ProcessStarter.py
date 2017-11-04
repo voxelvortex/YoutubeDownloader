@@ -20,8 +20,7 @@ from MainWindow import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5 import QtWidgets, QtCore, QtGui, QtTest
-from PyQt5 import QtWebEngine,QtWebEngineWidgets, QtWebEngineCore
+from PyQt5 import QtWidgets, QtCore, QtGui, QtTest, QtWebEngine,QtWebEngineWidgets, QtWebEngineCore
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 import youtube_dl
 
