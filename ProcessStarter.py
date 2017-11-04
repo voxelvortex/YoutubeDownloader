@@ -1,14 +1,28 @@
 import sys
 import subprocess
+import os, MainWindow
+from MainWindow import *
+from pathlib import Path
+
+path = str(os.path.dirname(os.path.realpath(__file__)))
+pyLoc = sys.executable
+pyLoc = pyLoc[:-10] + "Scripts"
+print(pyLoc,path)
+
+mf = Path(path+"/first.txt")
+if not mf.is_file():
+    open(path+"/first.txt", 'w').close()
+    os.chdir(pyLoc)
+    os.system('pip install PyQt5')
+    os.system('pip install youtube-dl')
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import QtWidgets, QtCore, QtGui, QtTest
 from PyQt5 import QtWebEngine,QtWebEngineWidgets, QtWebEngineCore
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-import os, subprocess, youtube_dl, MainWindow
-from MainWindow import *
-from pathlib import Path
+import youtube_dl
 
 class App(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -98,18 +112,6 @@ class App(QMainWindow, Ui_MainWindow):
 
             return QtGui.QWidget.eventFilter(self, obj, event)
 
-
-path = str(os.path.dirname(os.path.realpath(__file__)))
-pyLoc = sys.executable
-pyLoc = pyLoc[:-10] + "Scripts"
-print(pyLoc,path)
-
-mf = Path(path+"/first.txt")
-if not mf.is_file():
-    open(path+"/first.txt", 'w').close()
-    os.chdir(pyLoc)
-    os.system('pip install PyQt5')
-    os.system('pip install youtube-dl')
 
 app = QApplication(sys.argv)
 l = App()
