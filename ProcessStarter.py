@@ -3,6 +3,7 @@ import subprocess
 import os, MainWindow
 from MainWindow import *
 from pathlib import Path
+import pip
 
 path = str(os.path.dirname(os.path.realpath(__file__)))
 pyLoc = sys.executable
@@ -12,9 +13,8 @@ print(pyLoc,path)
 mf = Path(path+"/first.txt")
 if not mf.is_file():
     open(path+"/first.txt", 'w').close()
-    os.chdir(pyLoc)
-    os.system('pip install PyQt5')
-    os.system('pip install youtube-dl')
+    pip.main(['install', 'youtube-dl'])
+    pip.main(['install', 'PyQt5'])
 
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
