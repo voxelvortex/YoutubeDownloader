@@ -33,7 +33,7 @@ class App(QMainWindow, Ui_MainWindow):
     def setUpStuff(self):
 
         self.webView = QWebEngineView()
-        self.webView.load(QUrl('http://youtube.com'))
+        self.webView.load(QUrl('http://www.bvog.com/?post=IDfYkryyCpfQekgWm'))
         self.webView.setBaseSize(500,500)
         self.webView.setVisible(True)
         self.gridLayout.addWidget(self.webView, 1, 0, 1, 2)
