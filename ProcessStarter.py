@@ -63,8 +63,9 @@ class App(QMainWindow, Ui_MainWindow):
         print("ytdownload")
         try:
             with youtube_dl.YoutubeDL({}) as ydl:
-                login = os.getlogin()
-                path = "C:/Users/"+login+"/Downloads/Youtube_Downloader"
+                dirname = os.path.split(os.path.abspath(__file__))
+                path = dirname[0] + "\\Downloads"
+                print("script: __file__ is", path)
                 if not os.path.exists(path):
                     os.makedirs(path)
                 os.chdir(path)
