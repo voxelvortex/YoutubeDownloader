@@ -31,7 +31,6 @@ class App(QMainWindow, Ui_MainWindow):
         self.setUpStuff()
 
     def setUpStuff(self):
-
         self.webView = QWebEngineView()
         self.webView.load(QUrl('http://youtube.com'))
         self.webView.setBaseSize(500,500)
@@ -44,7 +43,6 @@ class App(QMainWindow, Ui_MainWindow):
         self.downloadButton.clicked.connect(self.youtubeDownload)
         self.setURL.clicked.connect(self.setURLm)
         self.getActualURL()
-
 
     def getActualURL(self):
         print("getactualurl")
