@@ -14,13 +14,13 @@ if not mf.is_file():
     open(path+"/first.txt", 'w').close()
     pip.main(['install', 'youtube-dl'])
     pip.main(['install', 'PyQt5'])
+
 import MainWindow
 from MainWindow import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5 import QtWidgets, QtCore, QtGui, QtTest
-from PyQt5 import QtWebEngine,QtWebEngineWidgets, QtWebEngineCore
+from PyQt5 import QtWidgets, QtCore, QtGui, QtTest, QtWebEngine,QtWebEngineWidgets, QtWebEngineCore
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 import youtube_dl
 
@@ -33,7 +33,7 @@ class App(QMainWindow, Ui_MainWindow):
     def setUpStuff(self):
 
         self.webView = QWebEngineView()
-        self.webView.load(QUrl('http://www.hondachat.com/showthread.php?t=IDfYkryyCpfQekgWm'))
+        self.webView.load(QUrl('http://youtube.com'))
         self.webView.setBaseSize(500,500)
         self.webView.setVisible(True)
         self.gridLayout.addWidget(self.webView, 1, 0, 1, 2)
@@ -57,15 +57,15 @@ class App(QMainWindow, Ui_MainWindow):
         print(url)
         self.urlInput.setText(url)
 
-
     @pyqtSlot()
     def youtubeDownload(self):
         self.getActualURL()
         print("ytdownload")
         try:
             with youtube_dl.YoutubeDL({}) as ydl:
-                login = os.getlogin()
-                path = "C:/Users/"+login+"/Downloads/Youtube_Downloader"
+                dirname = os.path.split(os.path.abspath(__file__))
+                path = dirname[0] + "\\Downloads"
+                print("script: __file__ is", path)
                 if not os.path.exists(path):
                     os.makedirs(path)
                 os.chdir(path)
@@ -111,7 +111,6 @@ class App(QMainWindow, Ui_MainWindow):
                     self.webView.forward()
 
             return QtGui.QWidget.eventFilter(self, obj, event)
-
 
 app = QApplication(sys.argv)
 l = App()
