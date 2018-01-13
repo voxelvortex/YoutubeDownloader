@@ -78,7 +78,6 @@ class App(QMainWindow, Ui_MainWindow):
 
     @pyqtSlot()
     def setURLm(self):
-        print("seturlm")
         try:
             shortcut = False
             url = self.urlInput.displayText()
@@ -94,7 +93,9 @@ class App(QMainWindow, Ui_MainWindow):
         except:
             pass
 
+        @pyqtSlot()
         def eventFilter(self, obj, event):
+            print("T")
 
             #if(obj == self.webView):
             self.getActualURL()
