@@ -37,8 +37,6 @@ class App(QMainWindow, Ui_MainWindow):
         self.webView.setVisible(True)
         self.gridLayout.addWidget(self.webView, 1, 0, 1, 2)
         self.webView.installEventFilter(self)
-
-
         self.getActualURL()
         self.downloadButton.clicked.connect(self.youtubeDownload)
         self.setURL.clicked.connect(self.setURLm)

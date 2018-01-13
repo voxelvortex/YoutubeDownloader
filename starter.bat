@@ -1,1 +1,2 @@
 python ProcessStarter.py
+exit
