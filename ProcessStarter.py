@@ -7,7 +7,7 @@ import pip
 path = str(os.path.dirname(os.path.realpath(__file__)))
 pyLoc = sys.executable
 pyLoc = pyLoc[:-10] + "Scripts"
-print(pyLoc,path)
+print(path)
 
 mf = Path(path+"/first.txt")
 if not mf.is_file():
@@ -43,9 +43,7 @@ class App(QMainWindow, Ui_MainWindow):
         self.getActualURL()
 
     def getActualURL(self):
-        print("getactualurl")
         i = self.webView.url()
-        print(i)
         i = str(i)
         i = i[19:]
         ilen = i.__len__()
@@ -56,20 +54,24 @@ class App(QMainWindow, Ui_MainWindow):
     @pyqtSlot()
     def youtubeDownload(self):
         self.getActualURL()
-        print("ytdownload")
         try:
             with youtube_dl.YoutubeDL({}) as ydl:
                 dirname = os.path.split(os.path.abspath(__file__))
                 path = dirname[0] + "\\Downloads"
-                print("script: __file__ is", path)
                 if not os.path.exists(path):
                     os.makedirs(path)
                 os.chdir(path)
                 ydl.download([str(self.urlInput.displayText())])
+                msgBox = QMessageBox()
+                msgBox.setWindowTitle('Finished')
+                msgBox.setText("Your video has finished downloading.\nIt is available at "+path)
+                msgBox.setStandardButtons(QMessageBox.Ok)
+                msgBox.setDefaultButton(QMessageBox.Ok)
+                msgBox.exec_()
         except:
             msgBox = QMessageBox()
-            msgBox.setText("Error:")
-            msgBox.setInformativeText("An unknown error occurred. Ensure video link is correct")
+            msgBox.setWindowTitle("Error")
+            msgBox.setText("An error occurred. Ensure video link is correct")
             msgBox.setStandardButtons(QMessageBox.Ok)
             msgBox.setDefaultButton(QMessageBox.Ok)
             msgBox.exec_()

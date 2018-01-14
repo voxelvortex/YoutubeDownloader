@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'MainWindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.6
+# Created by: PyQt5 UI code generator 5.9.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -13,7 +13,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(824, 728)
         MainWindow.setMinimumSize(QtCore.QSize(250, 150))
-        MainWindow.setMaximumSize(QtCore.QSize(1200, 835))
+        MainWindow.setMaximumSize(QtCore.QSize(1920, 1080))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setEnabled(True)
         self.centralwidget.setMaximumSize(QtCore.QSize(1218, 836))
@@ -51,4 +51,14 @@ class Ui_MainWindow(object):
         self.downloadButton.setText(_translate("MainWindow", "Download Youtube Video"))
         self.urlInput.setText(_translate("MainWindow", "Enter URL here (include http://www)"))
         self.setURL.setText(_translate("MainWindow", "Go to entered URL"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
 
