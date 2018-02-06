@@ -4,11 +4,11 @@ import os
 from pathlib import Path
 import pip
 
-path = str(os.path.dirname(os.path.realpath(__file__)))
+
 pyLoc = sys.executable
 pyLoc = pyLoc[:-10] + "Scripts"
-print(path)
-
+dirname = os.path.split(os.path.abspath(__file__))
+path = dirname[0]
 mf = Path(path+"/first.txt")
 if not mf.is_file():
     open(path+"/first.txt", 'w').close()
@@ -56,11 +56,6 @@ class App(QMainWindow, Ui_MainWindow):
         self.getActualURL()
         try:
             with youtube_dl.YoutubeDL({}) as ydl:
-                dirname = os.path.split(os.path.abspath(__file__))
-                path = dirname[0] + "\\Downloads"
-                if not os.path.exists(path):
-                    os.makedirs(path)
-                os.chdir(path)
                 ydl.download([str(self.urlInput.displayText())])
                 msgBox = QMessageBox()
                 msgBox.setWindowTitle('Finished')
@@ -114,5 +109,11 @@ class App(QMainWindow, Ui_MainWindow):
 app = QApplication(sys.argv)
 l = App()
 l.show()
-l.setWindowIcon(QIcon(path+"/YTDL.png"))
+l.setWindowIcon(QIcon(path+"\\YTDL.png"))
+
+path = path + "\\Downloads"
+print(path)
+if not os.path.exists(path):
+    os.makedirs(path)
+os.chdir(path)
 sys.exit(app.exec_())
