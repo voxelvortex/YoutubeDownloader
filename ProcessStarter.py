@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import sys
 import subprocess
 import os
@@ -14,6 +15,7 @@ if not mf.is_file():
     open(path+"/first.txt", 'w').close()
     pip.main(['install', 'youtube-dl'])
     pip.main(['install', 'PyQt5'])
+    pip.main(['install','avprobe'])
 
 import MainWindow
 from MainWindow import *
@@ -35,10 +37,11 @@ class App(QMainWindow, Ui_MainWindow):
         self.webView.load(QUrl('http://youtube.com'))
         self.webView.setBaseSize(500,500)
         self.webView.setVisible(True)
-        self.gridLayout.addWidget(self.webView, 1, 0, 1, 2)
+        self.gridLayout.addWidget(self.webView, 1, 0, 1, 0)
         self.webView.installEventFilter(self)
         self.getActualURL()
-        self.downloadButton.clicked.connect(self.youtubeDownload)
+        self.downloadVideoButton.clicked.connect(self.downloadVideo)
+        self.downloadMp3Button.clicked.connect(self.downloadMp3)
         self.setURL.clicked.connect(self.setURLm)
         self.getActualURL()
 
@@ -51,13 +54,16 @@ class App(QMainWindow, Ui_MainWindow):
         print(url)
         self.urlInput.setText(url)
 
-    @pyqtSlot()
-    def youtubeDownload(self):
+    def youtubeDownload(self,type):
         self.getActualURL()
+        if type==1:
+            ydl_opts = {'format': 'bestaudio/best','postprocessors': [{'key': 'FFmpegExtractAudio','preferredcodec': 'mp3','preferredquality': '192',}],}
+        else:
+            ydl_opts = {}
         try:
-            with youtube_dl.YoutubeDL({}) as ydl:
-                ydl.download([str(self.urlInput.displayText())])
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 msgBox = QMessageBox()
+                ydl.download([str(self.urlInput.displayText())])
                 msgBox.setWindowTitle('Finished')
                 msgBox.setText("Your video has finished downloading.\nIt is available at "+path)
                 msgBox.setStandardButtons(QMessageBox.Ok)
@@ -70,6 +76,14 @@ class App(QMainWindow, Ui_MainWindow):
             msgBox.setStandardButtons(QMessageBox.Ok)
             msgBox.setDefaultButton(QMessageBox.Ok)
             msgBox.exec_()
+
+    @pyqtSlot()
+    def downloadVideo(self):
+        self.youtubeDownload(0)
+
+    @pyqtSlot()
+    def downloadMp3(self):
+        self.youtubeDownload(1)
 
     @pyqtSlot()
     def setURLm(self):

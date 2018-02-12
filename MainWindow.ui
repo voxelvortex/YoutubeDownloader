@@ -18,8 +18,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>1920</width>
-    <height>1080</height>
+    <width>960</width>
+    <height>840</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -39,14 +39,7 @@
     <enum>Qt::LeftToRight</enum>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="0" colspan="2">
-     <widget class="QPushButton" name="downloadButton">
-      <property name="text">
-       <string>Download Youtube Video</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
+    <item row="0" column="3">
      <widget class="QLineEdit" name="urlInput">
       <property name="font">
        <font>
@@ -61,14 +54,14 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="0" column="4">
      <widget class="QPushButton" name="setURL">
       <property name="text">
        <string>Go to entered URL</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="1" column="3">
      <spacer name="verticalSpacer">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -80,6 +73,20 @@
        </size>
       </property>
      </spacer>
+    </item>
+    <item row="2" column="3">
+     <widget class="QPushButton" name="downloadVideoButton">
+      <property name="text">
+       <string>Download Youtube Video</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QPushButton" name="downloadMp3Button">
+      <property name="text">
+       <string>Download As Mp3</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
