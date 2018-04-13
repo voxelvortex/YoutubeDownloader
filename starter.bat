@@ -1,3 +1,3 @@
 echo off
-python ProcessStarter.py
+python.exe ProcessStarter.py
 exit

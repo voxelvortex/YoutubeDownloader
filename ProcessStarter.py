@@ -8,8 +8,8 @@ import pip
 
 pyLoc = sys.executable
 pyLoc = pyLoc[:-10] + "Scripts"
-dirname = os.path.split(os.path.abspath(__file__))
-path = dirname[0]
+path = os.getcwd()
+print(path)
 mf = Path(path+"/first.txt")
 if not mf.is_file():
     open(path+"/first.txt", 'w').close()
