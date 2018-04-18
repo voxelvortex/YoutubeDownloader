@@ -9,9 +9,9 @@ path = os.getcwd()
 print(path)
 
 
+
 mf = Path(path+"/first.txt")
-ex = Path(path+"/ProcessStarter.exe")
-if not (mf.is_file()and ex.is_file()):
+if not (mf.is_file()):
     open(path+"/first.txt", 'w').close()
     pip.main(['install', 'youtube-dl'])
     pip.main(['install', 'PyQt5'])
