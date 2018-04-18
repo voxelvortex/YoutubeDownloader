@@ -5,13 +5,13 @@ import os
 from pathlib import Path
 import pip
 
-
-pyLoc = sys.executable
-pyLoc = pyLoc[:-10] + "Scripts"
 path = os.getcwd()
 print(path)
+
+
 mf = Path(path+"/first.txt")
-if not mf.is_file():
+ex = Path(path+"/ProcessStarter.exe")
+if not (mf.is_file()and ex.is_file()):
     open(path+"/first.txt", 'w').close()
     pip.main(['install', 'youtube-dl'])
     pip.main(['install', 'PyQt5'])
@@ -20,10 +20,10 @@ if not mf.is_file():
 import MainWindow
 from MainWindow import *
 from PyQt5.QtWidgets import *
+from PyQt5 import QtCore, QtGui
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-from PyQt5 import QtWidgets, QtCore, QtGui, QtTest, QtWebEngine,QtWebEngineWidgets, QtWebEngineCore
-from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt5.QtWebEngineWidgets import *
 import youtube_dl
 
 class App(QMainWindow, Ui_MainWindow):
@@ -39,6 +39,7 @@ class App(QMainWindow, Ui_MainWindow):
         self.webView.setVisible(True)
         self.gridLayout.addWidget(self.webView, 1, 0, 1, 0)
         self.webView.installEventFilter(self)
+        self.webView.settings().setAttribute(QWebEngineSettings.PluginsEnabled,True)
         self.getActualURL()
         self.downloadVideoButton.clicked.connect(self.downloadVideo)
         self.downloadMp3Button.clicked.connect(self.downloadMp3)
