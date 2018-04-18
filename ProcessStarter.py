@@ -6,7 +6,7 @@ from pathlib import Path
 import pip
 
 path = os.getcwd()
-print(path)
+
 
 
 
